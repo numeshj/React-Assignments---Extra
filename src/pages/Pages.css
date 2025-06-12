@@ -1,0 +1,13 @@
+body, #root {
+  display: block !important;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+.assignment-title {
+  text-align: center;
+  margin-top: 40px;
+  font-weight: bold;
+  font-size: 2rem;
+}
