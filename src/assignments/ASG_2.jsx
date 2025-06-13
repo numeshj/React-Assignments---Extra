@@ -5,7 +5,7 @@ export default function ASG_2() {
   return (
     <>
         <BackToHome/>
-      <h1 className="assignment-title" >Assignment-2</h1>
+      <h1 className="assignment-title" >Assignment-2 - Extra Work</h1>
     </>
   )
 }
