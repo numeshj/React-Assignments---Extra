@@ -1,11 +1,11 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter, Routes, Route, HashRouter } from "react-router-dom"; // <-- Add Routes and Route
+import { Routes, Route, HashRouter } from "react-router-dom"; // <-- Add Routes and Route
 import "./index.css";
 import App from "./App.jsx";
-import ASG_1 from "./pages/ASG_1.jsx";
-import ASG_3 from "./pages/ASG_3.jsx";
-import ASG_2 from "./pages/ASG_2.jsx";
+import ASG_1 from "./assignments/ASG_1.jsx";
+import ASG_2 from "./assignments/ASG_2.jsx";
+import ASG_3 from "./assignments/ASG_3.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>

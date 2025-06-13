@@ -1,0 +1,58 @@
+.button-text-pair {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto 5% auto; 
+}
+
+
+.btn-ags1 {
+  width: 90%;
+  margin: 0 auto 0.5%; 
+  margin-top: 5%;
+  padding: 1.5%;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-align: center;
+  border: none;
+  border-radius: 2%;
+  background-color: #030303;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  line-height: 1.4;
+}
+
+.btn-ags1 span {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: normal;
+  margin-top: 6px;
+}
+
+.btn-ags1:hover {
+  background-color: #061320;
+}
+
+.text-box-container {
+  width: 90%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding-top: 0;
+  padding-bottom: 5%;
+  box-sizing: border-box;
+}
+
+.text-box {
+  background-color: #293036;
+  padding: 2.5%;
+  border: 1px solid #000000;
+  border-radius: 8px;
+  margin-top: 0; 
+  font-size: 1rem;
+  line-height: 1.5;
+  resize: both;
+  overflow: auto;
+  min-height: 100px;
+  max-height: 400px;
+  min-width: 200px;
+}

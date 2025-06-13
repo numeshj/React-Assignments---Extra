@@ -1,5 +1,5 @@
 import BackToHome from '../component/BackToHome'
-import '../pages/Pages.css';
+import '../assignments/Pages.css';
 
 export default function ASG_2() {
   return (
