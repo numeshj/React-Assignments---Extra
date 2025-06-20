@@ -39,71 +39,73 @@ export default function AGS_9() {
       <h1 className="assignment-title">Assignment-9</h1>
       <hr />
       <br />
-      <h2>Colors</h2>
-      <label>Search: </label>
-      <input
-        className="asg9-search-input"
-        placeholder="Enter the color"
-        type="text"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
-      <button className="asg9-search-btn" onClick={handleSearch}>
-        Search
-      </button>
-      <ul className="asg9-color-list">
-        {colors.map((item, index) => (
-          <li className="asg9-color-item" key={index}>
-            <span
-              className="asg9-color-box"
-              style={{ backgroundColor: item.code }}
-            ></span>
-            {item.name} - {item.code}
-          </li>
-        ))}
-      </ul>
-      <div className="asg9-pagination">
-        <button
-          className="asg9-page-btn"
-          onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-          disabled={page === 1}
-        >
-          Previous
+      <div className="main-body">
+        <h2>Colors</h2>
+        <label>Search: </label>
+        <input
+          className="asg9-search-input"
+          placeholder="Enter the color"
+          type="text"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <button className="asg9-search-btn" onClick={handleSearch}>
+          Search
         </button>
-        {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
+        <ul className="asg9-color-list">
+          {colors.map((item, index) => (
+            <li className="asg9-color-item" key={index}>
+              <span
+                className="asg9-color-box"
+                style={{ backgroundColor: item.code }}
+              ></span>
+              {item.name} - {item.code}
+            </li>
+          ))}
+        </ul>
+        <div className="asg9-pagination">
           <button
-            key={num}
-            className={`asg9-page-btn${
-              page === num ? " asg9-page-btn-active" : ""
-            }`}
-            onClick={() => setPage(num)}
+            className="asg9-page-btn-main"
+            onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+            disabled={page === 1}
           >
-            {num}
+            Previous
           </button>
-        ))}
-        <button
-          className="asg9-page-btn"
-          onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
-          disabled={page === totalPages}
-        >
-          Next
-        </button>
-      </div>
-      <div className="asg9-items-per-page">
-        <label htmlFor="itemsPerPage">Items per page: </label>
-        <select
-          id="itemsPerPage"
-          value={limit}
-          onChange={(e) => {
-            setLimit(Number(e.target.value));
-            setPage(1);
-          }}
-        >
-          <option value={5}>5</option>
-          <option value={10}>10</option>
-          <option value={20}>20</option>
-          <option value={50}>50</option>
-        </select>
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
+            <button
+              key={num}
+              className={`asg9-page-btn${
+                page === num ? " asg9-page-btn-active" : ""
+              }`}
+              onClick={() => setPage(num)}
+            >
+              {num}
+            </button>
+          ))}
+          <button
+            className="asg9-page-btn-main"
+            onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+            disabled={page === totalPages}
+          >
+            Next
+          </button>
+        </div>
+        <div className="asg9-items-per-page">
+          <label htmlFor="itemsPerPage">Items per page: </label>
+          <select
+            id="itemsPerPage"
+            value={limit}
+            onChange={(e) => {
+              setLimit(Number(e.target.value));
+              setPage(1);
+            }}
+          >
+            <option value={5}>5</option>
+            <option value={10}>10</option>
+            <option value={20}>20</option>
+            <option value={50}>50</option>
+          </select>
+        </div>
       </div>
     </>
   );
