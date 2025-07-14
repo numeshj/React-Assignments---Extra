@@ -13,6 +13,7 @@ function App() {
       <button className="asg-btn" onClick={()=> navigate('/asg-2')}>ASG_2</button>
       <button className="asg-btn" onClick={()=> navigate('/asg-3')}>ASG_3</button>
       <button className="asg-btn" onClick={()=> navigate('/asg-9')}>ASG_9</button>
+      <button className="asg-btn" onClick={()=> navigate('/asg-29')}>29</button>
     </div>
 
   )
