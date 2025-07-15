@@ -1,0 +1,174 @@
+.asg30-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 32px 24px;
+  background: #181a20;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3), 0 1.5px 6px rgba(0, 0, 0, 0.18);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.face-container {
+  position: relative;
+  display: inline-block;
+}
+
+.canvas-image {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.sunglasses-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+  border-radius: 8px;
+}
+
+/* Button styles for file input and webcam buttons */
+input[type="file"] {
+  padding: 12px 24px;
+  font-size: 16px;
+  background: #564caf;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+input[type="file"]:hover {
+  background: #313877;
+}
+
+input[type="file"]:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+button {
+  padding: 12px 24px;
+  font-size: 16px;
+  background: #564caf;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 0 10px;
+}
+
+button:hover {
+  background: #313877;
+}
+
+button:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+}
+
+.asg30-button.active {
+  background: #2196F3;
+}
+
+.asg30-button.active:hover {
+  background: #1976D2;
+}
+
+.asg30-canvas {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  width: 100%;
+  background: #23262f;
+  color: #f1f1f1;
+  border: 2px dashed #353945;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.asg30-reset-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.asg30-reset {
+  padding: 10px 20px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.asg30-reset:hover {
+  background-color: #d32f2f;
+}
+
+.detection-info {
+  background: #2a2d35;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 20px;
+  color: #f1f1f1;
+  max-width: 100%;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.detection-info h3 {
+  color: #4CAF50;
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.face-info {
+  background: #353945;
+  border-radius: 6px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.face-info h4 {
+  color: #fff;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.expressions {
+  margin-bottom: 10px;
+}
+
+.expression-item {
+  padding: 2px 0;
+  font-size: 14px;
+}
+
+.landmarks-count {
+  font-size: 14px;
+  color: #ccc;
+}
+.expression-item {
+  padding: 2px 0;
+  font-size: 14px;
+}
+
+.landmarks-count {
+  font-size: 14px;
+  color: #ccc;
+}
