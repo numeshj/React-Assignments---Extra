@@ -1,4 +1,4 @@
-.asg30-container {
+.asg31-container {
   max-width: 800px;
   margin: 40px auto;
   padding: 32px 24px;
@@ -78,15 +78,15 @@ button:disabled {
   cursor: not-allowed;
 }
 
-.asg30-button.active {
+.asg31-button.active {
   background: #2196F3;
 }
 
-.asg30-button.active:hover {
+.asg31-button.active:hover {
   background: #1976D2;
 }
 
-.asg30-canvas {
+.asg31-canvas {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -99,13 +99,13 @@ button:disabled {
   padding: 20px;
 }
 
-.asg30-reset-button {
+.asg31-reset-button {
   display: flex;
   justify-content: center;
   margin-top: 20px;
 }
 
-.asg30-reset {
+.asg31-reset {
   padding: 10px 20px;
   background-color: #f44336;
   color: white;
@@ -116,7 +116,7 @@ button:disabled {
   transition: background-color 0.3s ease;
 }
 
-.asg30-reset:hover {
+.asg31-reset:hover {
   background-color: #d32f2f;
 }
 
