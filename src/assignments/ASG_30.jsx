@@ -168,8 +168,9 @@ export default function ASG_30() {
     // Get eye landmarks
     const leftEye = landmarks.getLeftEye();
     const rightEye = landmarks.getRightEye();
+    const jawLine = landmarks.getJawOutline();
     
-    if (leftEye.length === 0 || rightEye.length === 0) return;
+    if (leftEye.length === 0 || rightEye.length === 0 || jawLine.length === 0) return;
     
     // Calculate eye centers
     const leftEyeCenter = {
@@ -182,14 +183,30 @@ export default function ASG_30() {
       y: rightEye.reduce((sum, point) => sum + point.y, 0) / rightEye.length
     };
     
+    // Get ear positions from jaw outline (approximate ear locations)
+    const leftEarApprox = jawLine[0];  // First point of jaw outline (left side)
+    const rightEarApprox = jawLine[jawLine.length - 1];  // Last point of jaw outline (right side)
+    
+    // More accurate ear positioning based on face landmarks
+    const faceWidth = Math.abs(rightEarApprox.x - leftEarApprox.x);
+    const eyeLevel = (leftEyeCenter.y + rightEyeCenter.y) / 2;
+    
+    // Calculate ear positions relative to eye level
+    const leftEar = {
+      x: leftEarApprox.x - faceWidth * 0.05, // Extended further out for longer arms
+      y: eyeLevel + (leftEyeCenter.y - eyeLevel) * 0.4 // Slightly more below eye level
+    };
+    
+    const rightEar = {
+      x: rightEarApprox.x + faceWidth * 0.05, // Extended further out for longer arms
+      y: eyeLevel + (rightEyeCenter.y - eyeLevel) * 0.4 // Slightly more below eye level
+    };
+    
     // Calculate sunglasses dimensions and position
     const eyeDistance = Math.sqrt(
       Math.pow(rightEyeCenter.x - leftEyeCenter.x, 2) + 
       Math.pow(rightEyeCenter.y - leftEyeCenter.y, 2)
     );
-    
-    const sunglassesWidth = eyeDistance * 1.8 * scaleX;
-    const sunglassesHeight = eyeDistance * 0.8 * scaleY;
     
     const centerX = ((leftEyeCenter.x + rightEyeCenter.x) / 2) * scaleX;
     const centerY = ((leftEyeCenter.y + rightEyeCenter.y) / 2) * scaleY;
@@ -204,54 +221,172 @@ export default function ASG_30() {
     ctx.translate(centerX, centerY);
     ctx.rotate(angle);
     
-    // Draw sunglasses frame
-    ctx.strokeStyle = '#000000';
-    ctx.fillStyle = '#1a1a1a';
-    ctx.lineWidth = 3;
+    // Lens dimensions - slightly smaller for more realistic look
+    const lensRadius = eyeDistance * 0.32 * Math.min(scaleX, scaleY);
+    const lensOffsetX = eyeDistance * 0.40 * scaleX;
+    const lensOffsetY = -eyeDistance * 0.03 * scaleY;
+    
+    // Draw lens shadows first (for depth effect)
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
+    ctx.shadowBlur = 6;
+    ctx.shadowOffsetX = 2;
+    ctx.shadowOffsetY = 2;
     
     // Left lens
-    const leftLensX = -sunglassesWidth * 0.3;
-    const leftLensY = -sunglassesHeight * 0.3;
-    const lensWidth = sunglassesWidth * 0.25;
-    const lensHeight = sunglassesHeight * 0.6;
-    
-    ctx.fillRect(leftLensX, leftLensY, lensWidth, lensHeight);
-    ctx.strokeRect(leftLensX, leftLensY, lensWidth, lensHeight);
-    
-    // Right lens
-    const rightLensX = sunglassesWidth * 0.05;
-    ctx.fillRect(rightLensX, leftLensY, lensWidth, lensHeight);
-    ctx.strokeRect(rightLensX, leftLensY, lensWidth, lensHeight);
-    
-    // Bridge
-    ctx.beginPath();
-    ctx.moveTo(leftLensX + lensWidth, leftLensY + lensHeight * 0.3);
-    ctx.lineTo(rightLensX, leftLensY + lensHeight * 0.3);
-    ctx.stroke();
-    
-    // Left temple
-    ctx.beginPath();
-    ctx.moveTo(leftLensX, leftLensY + lensHeight * 0.3);
-    ctx.lineTo(leftLensX - sunglassesWidth * 0.2, leftLensY + lensHeight * 0.1);
-    ctx.stroke();
-    
-    // Right temple
-    ctx.beginPath();
-    ctx.moveTo(rightLensX + lensWidth, leftLensY + lensHeight * 0.3);
-    ctx.lineTo(rightLensX + lensWidth + sunglassesWidth * 0.2, leftLensY + lensHeight * 0.1);
-    ctx.stroke();
-    
-    // Add dark lens effect
     ctx.fillStyle = '#0a0a0a';
-    ctx.globalAlpha = 0.8;
-    ctx.fillRect(leftLensX + 2, leftLensY + 2, lensWidth - 4, lensHeight - 4);
-    ctx.fillRect(rightLensX + 2, leftLensY + 2, lensWidth - 4, lensHeight - 4);
+    ctx.beginPath();
+    ctx.arc(-lensOffsetX, lensOffsetY, lensRadius, 0, 2 * Math.PI);
+    ctx.fill();
     
-    // Add reflections
+    // Right lens  
+    ctx.beginPath();
+    ctx.arc(lensOffsetX, lensOffsetY, lensRadius, 0, 2 * Math.PI);
+    ctx.fill();
+    
+    // Reset shadow for frame
+    ctx.shadowColor = 'transparent';
+    
+    // Draw frame around lenses
+    ctx.strokeStyle = '#333333';
+    ctx.lineWidth = 2.5;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    
+    // Left lens frame
+    ctx.beginPath();
+    ctx.arc(-lensOffsetX, lensOffsetY, lensRadius + 2, 0, 2 * Math.PI);
+    ctx.stroke();
+    
+    // Right lens frame
+    ctx.beginPath();
+    ctx.arc(lensOffsetX, lensOffsetY, lensRadius + 2, 0, 2 * Math.PI);
+    ctx.stroke();
+    
+    // Bridge between lenses
+    const bridgeY = lensOffsetY - lensRadius * 0.25;
+    const bridgeStartX = -lensOffsetX + lensRadius * 0.7;
+    const bridgeEndX = lensOffsetX - lensRadius * 0.7;
+    
+    ctx.strokeStyle = '#333333';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(bridgeStartX, bridgeY);
+    ctx.quadraticCurveTo(0, bridgeY - 4, bridgeEndX, bridgeY);
+    ctx.stroke();
+    
+    // Calculate temple connection points and ear positions in rotated coordinate system
+    const templeStartY = lensOffsetY;
+    
+    // Transform ear positions to the rotated coordinate system
+    const cos_angle = Math.cos(-angle);
+    const sin_angle = Math.sin(-angle);
+    
+    // Left ear in rotated coordinates
+    const leftEarRelX = (leftEar.x * scaleX - centerX);
+    const leftEarRelY = (leftEar.y * scaleY - centerY);
+    const leftEarRotX = leftEarRelX * cos_angle - leftEarRelY * sin_angle;
+    const leftEarRotY = leftEarRelX * sin_angle + leftEarRelY * cos_angle;
+    
+    // Right ear in rotated coordinates  
+    const rightEarRelX = (rightEar.x * scaleX - centerX);
+    const rightEarRelY = (rightEar.y * scaleY - centerY);
+    const rightEarRotX = rightEarRelX * cos_angle - rightEarRelY * sin_angle;
+    const rightEarRotY = rightEarRelX * sin_angle + rightEarRelY * cos_angle;
+    
+    // Draw realistic temple arms that curve toward the ears
+    ctx.strokeStyle = '#333333';
+    ctx.lineWidth = 3;
+    
+    // Left temple - curved path to ear
+    const leftTempleStartX = -lensOffsetX - lensRadius * 0.9;
+    ctx.beginPath();
+    ctx.moveTo(leftTempleStartX, templeStartY);
+    
+    // Control points for smooth curve to ear - extended length
+    const leftControlX1 = leftTempleStartX - eyeDistance * 0.5 * scaleX;
+    const leftControlY1 = templeStartY - 8;
+    const leftControlX2 = leftEarRotX + eyeDistance * 0.15 * scaleX;
+    const leftControlY2 = leftEarRotY - 15;
+    
+    ctx.bezierCurveTo(leftControlX1, leftControlY1, leftControlX2, leftControlY2, leftEarRotX, leftEarRotY);
+    ctx.stroke();
+    
+    // Right temple - curved path to ear  
+    const rightTempleStartX = lensOffsetX + lensRadius * 0.9;
+    ctx.beginPath();
+    ctx.moveTo(rightTempleStartX, templeStartY);
+    
+    // Control points for smooth curve to ear - extended length
+    const rightControlX1 = rightTempleStartX + eyeDistance * 0.5 * scaleX;
+    const rightControlY1 = templeStartY - 8;
+    const rightControlX2 = rightEarRotX - eyeDistance * 0.15 * scaleX;
+    const rightControlY2 = rightEarRotY - 15;
+    
+    ctx.bezierCurveTo(rightControlX1, rightControlY1, rightControlX2, rightControlY2, rightEarRotX, rightEarRotY);
+    ctx.stroke();
+    
+    // Add ear pieces (small curved ends) - extended
+    ctx.lineWidth = 2.5;
+    
+    // Left ear piece - longer curve
+    ctx.beginPath();
+    ctx.arc(leftEarRotX, leftEarRotY, 4, 0, Math.PI * 1.2);
+    ctx.stroke();
+    
+    // Right ear piece - longer curve
+    ctx.beginPath();
+    ctx.arc(rightEarRotX, rightEarRotY, 4, 0, Math.PI * 1.2);
+    ctx.stroke();
+    
+    // Add realistic lens effects
+    ctx.globalAlpha = 0.12;
+    ctx.fillStyle = '#ffffff';
+    
+    // Left lens highlight
+    ctx.beginPath();
+    ctx.ellipse(-lensOffsetX - lensRadius * 0.25, lensOffsetY - lensRadius * 0.25, 
+                lensRadius * 0.35, lensRadius * 0.5, -0.4, 0, 2 * Math.PI);
+    ctx.fill();
+    
+    // Right lens highlight
+    ctx.beginPath();
+    ctx.ellipse(lensOffsetX - lensRadius * 0.25, lensOffsetY - lensRadius * 0.25, 
+                lensRadius * 0.35, lensRadius * 0.5, -0.4, 0, 2 * Math.PI);
+    ctx.fill();
+    
+    // Add smaller bright reflections
     ctx.globalAlpha = 0.3;
     ctx.fillStyle = '#ffffff';
-    ctx.fillRect(leftLensX + 4, leftLensY + 4, lensWidth * 0.3, lensHeight * 0.2);
-    ctx.fillRect(rightLensX + 4, leftLensY + 4, lensWidth * 0.3, lensHeight * 0.2);
+    
+    // Left lens small highlight
+    ctx.beginPath();
+    ctx.arc(-lensOffsetX - lensRadius * 0.35, lensOffsetY - lensRadius * 0.35, lensRadius * 0.12, 0, 2 * Math.PI);
+    ctx.fill();
+    
+    // Right lens small highlight
+    ctx.beginPath();
+    ctx.arc(lensOffsetX - lensRadius * 0.35, lensOffsetY - lensRadius * 0.35, lensRadius * 0.12, 0, 2 * Math.PI);
+    ctx.fill();
+    
+    // Add subtle gradient effect to lenses for depth
+    ctx.globalAlpha = 0.08;
+    const gradient = ctx.createRadialGradient(-lensOffsetX, lensOffsetY, 0, -lensOffsetX, lensOffsetY, lensRadius);
+    gradient.addColorStop(0, '#ffffff');
+    gradient.addColorStop(1, 'transparent');
+    
+    ctx.fillStyle = gradient;
+    ctx.beginPath();
+    ctx.arc(-lensOffsetX, lensOffsetY, lensRadius, 0, 2 * Math.PI);
+    ctx.fill();
+    
+    const gradient2 = ctx.createRadialGradient(lensOffsetX, lensOffsetY, 0, lensOffsetX, lensOffsetY, lensRadius);
+    gradient2.addColorStop(0, '#ffffff');
+    gradient2.addColorStop(1, 'transparent');
+    
+    ctx.fillStyle = gradient2;
+    ctx.beginPath();
+    ctx.arc(lensOffsetX, lensOffsetY, lensRadius, 0, 2 * Math.PI);
+    ctx.fill();
     
     ctx.restore();
   };

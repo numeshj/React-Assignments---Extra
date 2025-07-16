@@ -19,6 +19,7 @@ createRoot(document.getElementById("root")).render(
         <Route path="/asg-2" element={<ASG_2 />} />
         <Route path="/asg-3" element={<ASG_3 />} />
         <Route path="/asg-9" element={<ASG_9 />} />
+        <Route path="/asg-29" element={<ASG_29 />} />
         <Route path="/asg-30" element={<ASG_30 />} />
       </Routes>
     </HashRouter>

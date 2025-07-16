@@ -14,7 +14,7 @@ function App() {
       <button className="asg-btn" onClick={()=> navigate('/asg-3')}>ASG_3</button>
       <button className="asg-btn" onClick={()=> navigate('/asg-9')}>ASG_9</button>
       <button className="asg-btn" onClick={()=> navigate('/asg-29')}>ASG_29</button>
-      <button className="asg-btn" onClick={()=> navigate('/asg-29')}>ASG_30</button>
+      <button className="asg-btn" onClick={()=> navigate('/asg-30')}>ASG_30</button>
     </div>
 
   )
